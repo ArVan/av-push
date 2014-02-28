@@ -14,11 +14,10 @@ var ROOT_PATH = path.dirname(__dirname);
  * Create a PushNotification
  * @constructor
  */
-module.exports.PushNotification = function PushNotification () {
+module.exports.AVPush = function AVPush () {
     this.options = {};
     this.apnConnection = null;
     this.note = null;
-    this.device = null;
 
     /**
      * Initialize PushNotification object
@@ -63,13 +62,10 @@ module.exports.PushNotification = function PushNotification () {
      * Configure PushNotification with given notification params and device token
      * @function
      * @param note
-     * @param device_token
      *
      * @since v0.0.1
      */
-    this.configure = function (note, device_token) {
-        var theDevice = new apn.Device(device_token);
-
+    this.configure = function (note) {
         if(note.badge) {
             this.note.badge = note.badge;
         }
@@ -98,15 +94,30 @@ module.exports.PushNotification = function PushNotification () {
                 }
             }
         }
-        this.device = theDevice;
     };
 
     /**
      * Send pre-configured PushNotification
      * @function
+	 * @param {string|string[]} device_tokens
      * @since v0.0.1
      */
-    this.send = function () {
-        this.apnConnection.pushNotification(this.note, this.device);
-    }
+    this.send = function (device_tokens) {
+		if(typeof device_tokens == 'string') {
+			device_tokens = [device_tokens];
+		}
+
+        this.apnConnection.pushNotification(this.note, device_tokens);
+    };
+
+	/**
+	 * Destroy existing push object. This will also disconnect from socket.
+	 */
+	this.destroy = function () {
+		this.note = null;
+		this.options = null;
+
+		this.apnConnection.shutdown();
+		this.apnConnection = null;
+	}
 };

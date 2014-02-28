@@ -1,0 +1,31 @@
+{
+  "name": "av-push",
+  "version": "0.0.1",
+  "description": "Push notification lib",
+  "keywords": [
+    "push",
+    "apn"
+  ],
+  "homepage": "https://github.com/ArVan/av-push",
+  "bugs": {
+    "email": "av@socialobjects.am"
+  },
+  "author": {
+    "name": "Arpy Vanyan",
+    "email": "av@socialobjects.am"
+  },
+  "dependencies": {
+    "apn": ">=1.4.4"
+  },
+  "main": "index.js",
+  "directories": {
+    "example": "example"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/ArVan/av-push.git"
+  },
+  "license": "BSD",
+  "readmeFilename": "README.md"
+//  "_id": "av-push@0.0.1",
+}

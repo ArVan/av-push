@@ -25,7 +25,6 @@
     "type": "git",
     "url": "git://github.com/ArVan/av-push.git"
   },
-  "license": "BSD",
-  "readmeFilename": "README.md"
-//  "_id": "av-push@0.0.1",
+  "readmeFilename": "README.md",
+  "_id": "av-push@0.0.1"
 }

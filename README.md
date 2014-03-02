@@ -13,13 +13,23 @@ As a sub-module of your project. In this case you will also need to install [apn
 	$ git submodule add http://github.com/arvan/node-av-push.git av-push
 	$ git submodule update --init
 
+# Changelog
+
+## v0.0.5
+
+- Support for GCM notifications
+
+
 # Quick start
 
 Below is the simple usage of this class. Just require the object, initialise and use it.
 
 	var avPush = require('av-push');
 	avPush.init({cert: 'my-certificate-file', key: 'my-key-file', passphrase: 'my-passphrase'});
+
 	....
+	....
+
 	avPush.configure({alert: 'This is a notification text', badge: 1});
 	avPush.send('some-device-token');
 
@@ -49,7 +59,7 @@ To get started with sending notifications, the class object should be created an
 	var avPush = require('av-push');
 	avPush.init({cert: 'my-certificate-file', key: 'my-key-file', passphrase: 'my-passphrase'});
 
-The *init()* method gets 1 argument. it is the class options. For now, this options tell what are the push distribution certificate files and some other apn configuration.
+The **init()** method gets 1 argument. it is the class options. For now, this options tell what are the push distribution certificate files and some other apn configuration.
 Complete list of options is listed below:
 
 	options = {
@@ -62,9 +72,11 @@ Complete list of options is listed below:
 			if(err){
 				console.log(err);
 			}
-		},                                 /* Callback when error occurs function(err,notification) */
+		},                                  /* Callback when error occurs function(err,notification) */
 		cacheLength: 100,                   /* Number of notifications to cache for error purposes */
-		isLocalized: false
+		isLocalized: false,                 /* Boolean indicating if APN is localized or not */
+		apiKey: '',                         /* The api key for GCM */
+        type: this.type.APN                 /* Type of the notification. Currently supported types are APN and GCM */
 	};
 
 ## Setting up the notification
@@ -75,13 +87,14 @@ In order to do so, you will need to set up a notification. Just like this:
 	avPush.configure({alert: 'Some text'});
 
 The configure method takes one argument which is a JSON object with the notification data.
-Typically, notification data looks like this:
+Typically, notification data for APN looks like this:
 
 	notification = {
 		alert: String,
 		badge: Number,
 		key: String,
-		args: Array
+		args: Array,
+		params: Object
 	}
 
 Note that you can easily send either simple text notification, or a localized notification.
@@ -98,7 +111,13 @@ You can also provide localization arguments to the notification:
 
 	avPush.configure({key: 'some_localization_key', args: ['arg1', 'arg2', ...]});
 
-If you wish to send some custom fields with your notification, just add them to the list and they will be added to the notification payload.
+If you wish to send some custom fields with your notification, just add them to the list under **params** key and they will be added to the notification payload.
+
+For GCM messages, the notification object looks different. As you can send whatever you want with the notification, the standart alert, badge, key and arg parameters are missing.
+
+    notification = {
+        params: Object
+    }
 
 ## Sending notification
 
@@ -110,7 +129,7 @@ Just call:
 The send method takes one argument which is ether string of one device token, or array of device tokens.
  So you can send the same notification to several users like this:
 
- 	avPush.send(['device-token-1', 'device-token-2', 'device-token-3', ...]);
+    avPush.send(['device-token-1', 'device-token-2', 'device-token-3', ...]);
 
 ## Shutting down
 

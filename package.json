@@ -1,6 +1,6 @@
 {
   "name": "av-push",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Push notification lib",
   "keywords": [
     "push",
@@ -26,5 +26,5 @@
     "url": "git://github.com/ArVan/av-push.git"
   },
   "readmeFilename": "README.md",
-  "_id": "av-push@0.0.4"
+  "_id": "av-push@0.0.5"
 }

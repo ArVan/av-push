@@ -1,5 +1,7 @@
 # node-av-push
 
+[![Build Status](https://travis-ci.org/ArVan/av-push.png?branch=master)](https://travis-ci.org/ArVan/av-push)
+
 A Node.js universal Push Notification Distribution library.
 
 # Installation

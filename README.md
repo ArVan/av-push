@@ -26,14 +26,14 @@ As a sub-module of your project. In this case you will also need to install [apn
 
 Below is the simple usage of this class. Just require the object, initialise and use it.
 
+```JavaScript
 	var avPush = require('av-push');
 	avPush.init({cert: 'my-certificate-file', key: 'my-key-file', passphrase: 'my-passphrase'});
-
 	....
 	....
-
 	avPush.configure({alert: 'This is a notification text', badge: 1});
 	avPush.send('some-device-token');
+```
 
 Below you can find more detailed usage tips and examples.
 
@@ -58,12 +58,15 @@ Below you can find more detailed usage tips and examples.
 
 To get started with sending notifications, the class object should be created and initialized. Here is an example:
 
+```JavaScript
 	var avPush = require('av-push');
 	avPush.init({cert: 'my-certificate-file', key: 'my-key-file', passphrase: 'my-passphrase'});
+```
 
 The **init()** method gets 1 argument. it is the class options. For now, this options tell what are the push distribution certificate files and some other apn configuration.
 Complete list of options is listed below:
 
+```JavaScript
 	options = {
 		cert: ''                            /* Certificate file path */
 		key:  ''                            /* Key data */
@@ -80,17 +83,21 @@ Complete list of options is listed below:
 		apiKey: '',                         /* The api key for GCM */
         type: this.type.APN                 /* Type of the notification. Currently supported types are APN and GCM */
 	};
+```
 
 ## Setting up the notification
 
 After initializing class object, it can be used to send as many different notifications as you need using just one object.
 In order to do so, you will need to set up a notification. Just like this:
 
+```JavaScript
 	avPush.configure({alert: 'Some text'});
+```
 
 The configure method takes one argument which is a JSON object with the notification data.
 Typically, notification data for APN looks like this:
 
+```JavaScript
 	notification = {
 		alert: String,
 		badge: Number,
@@ -98,47 +105,60 @@ Typically, notification data for APN looks like this:
 		args: Array,
 		params: Object
 	}
+```
 
 Note that you can easily send either simple text notification, or a localized notification.
 In order to use localized notification, you need to initialize AVPush object with **isLocalized** option set to **true**.
 Just like this:
 
+```JavaScript
 	avPush.init({isLocalized: true, ...});
+```
 
 After that, back to where you're setting up the notification:
 
+```JavaScript
 	avPush.configure({key: 'some_localization_key'});
-
+```
 You can also provide localization arguments to the notification:
 
+```JavaScript
 	avPush.configure({key: 'some_localization_key', args: ['arg1', 'arg2', ...]});
+```
 
 If you wish to send some custom fields with your notification, just add them to the list under **params** key and they will be added to the notification payload.
 
 For GCM messages, the notification object looks different. As you can send whatever you want with the notification, the standart alert, badge, key and arg parameters are missing.
 
+```JavaScript
     notification = {
         params: Object
     }
+```
 
 ## Sending notification
 
 Finally, you can send the created notification to as many users as you want.
 Just call:
 
+```JavaScript
 	avPush.send('some-device-token');
+```
 
 The send method takes one argument which is ether string of one device token, or array of device tokens.
  So you can send the same notification to several users like this:
 
+```JavaScript
     avPush.send(['device-token-1', 'device-token-2', 'device-token-3', ...]);
+```
 
 ## Shutting down
 
 When the **avPush** object is no longer needed, it should be shut down in order to close all connections and free some memory.
 
+```JavaScript
 	avPush.destroy();
-
+```
 
 
 
